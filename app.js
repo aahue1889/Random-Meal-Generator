@@ -29,7 +29,7 @@ function getRecipe() {
             const mealobj = res1.data.meals[randomIntFromInterval(0,res1.data.meals.length)];
             return axios.get("https://www.themealdb.com/api/json/v1/1/lookup.php?i="+mealobj.idMeal);
         })
-        .then(res2 => {
+        .then ( res2 => {
             console.log('(1) Outside result:', res2);
             showOutput(res2.data.meals[0]);
         })
