@@ -22,6 +22,28 @@
             >
                 <h2>Cooking made easy!</h2>
                 <pre><em>Click below button for a surprise</em></pre>
+                <div>
+                    <select id="areaSelect">
+                        <option value="">Any</option>
+                        <script>
+                            let area = ["British", "Canadian", "Chinese",
+                                        "Croatian", "Dutch", "Egyption",
+                                        "French", "Greek", "Indian",
+                                        "Irish", "Italian", "Jamaican",
+                                        "Japanese", "Kenyan", "Malaysian",
+                                        "Mexican", "Moroccan", "Polish",
+                                        "Thai", "Tunisian","Turkish",
+                                        "Unknown", "Vietnamese"];
+        
+                            area.forEach(function(item){
+                                let o=document.createElement("option");
+                                o.text = item;
+                                o.value = item;
+                                areaSelect.appendChild(o);
+                            });
+                        </script>
+                        </select>
+                </div>
                 <button
                     class="btn btn-success mt-1 mb-5"
                     id="mealBtn"

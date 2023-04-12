@@ -1,19 +1,43 @@
 const mealBtn = document.getElementById("mealBtn");
 
 function getRecipe() {
-    axios
+
+    var selectedarea = document.getElementById("areaSelect").value; 
+
+    if(document.getElementById("areaSelect").value == ""){
+        axios
         .get(
             "https://www.themealdb.com/api/json/v1/1/random.php"
         )
         .then((res) => res)
         .then((res) => {
-            let recipe = res.data.meals[0];
+            var recipe = res.data.meals[0];
             console.log(res);
             showOutput(recipe);
         })
         .catch((err) => {
             console.error(err);
         });
+    }
+    else{
+
+        axios
+        .get(
+            "https://www.themealdb.com/api/json/v1/1/filter.php?a="+selectedarea
+        )
+        .then( res1 => {
+            const mealobj = res1.data.meals[randomIntFromInterval(0,res1.data.meals.length)];
+            return axios.get("https://www.themealdb.com/api/json/v1/1/lookup.php?i="+mealobj.idMeal);
+        })
+        .then(res2 => {
+            console.log('(1) Outside result:', res2);
+            showOutput(res2.data.meals[0]);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    }
+
 }
 
 function toggleText() {
@@ -107,8 +131,12 @@ function showOutput(recipe) {
 `;
 }
 
-// logging
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
+
+// logging
 axios.interceptors.request.use(
     (config) => {
         console.log(`${config.method.toUpperCase()} request sent to ${
