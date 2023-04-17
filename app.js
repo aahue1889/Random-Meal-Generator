@@ -2,9 +2,21 @@ const mealBtn = document.getElementById("mealBtn");
 
 function getRecipe() {
 
-    var selectedarea = document.getElementById("areaSelect").value; 
+    var selectedarea = document.getElementById("areaSelect").value;
+    var selectedcategory = document.getElementById("categorySelect").value;
 
-    if(document.getElementById("areaSelect").value == ""){
+
+
+    if( ( selectedarea != "" ) && ( selectedcategory == "" ) ){
+        getURL = "https://www.themealdb.com/api/json/v1/1/filter.php?a="+selectedarea
+    }
+    else if( ( selectedarea == "" ) && ( selectedcategory != "" ) ){
+        getURL = "https://www.themealdb.com/api/json/v1/1/filter.php?c="+selectedcategory
+    }
+
+    
+
+    if(selectedarea == "" && selectedcategory == ""){
         axios
         .get(
             "https://www.themealdb.com/api/json/v1/1/random.php"
@@ -19,11 +31,11 @@ function getRecipe() {
             console.error(err);
         });
     }
-    else{
+    else if(  (selectedarea != "") || (selectedcategory != "") ){
 
         axios
         .get(
-            "https://www.themealdb.com/api/json/v1/1/filter.php?a="+selectedarea
+            getURL
         )
         .then( res1 => {
             const mealobj = res1.data.meals[randomIntFromInterval(0,res1.data.meals.length)];
@@ -32,11 +44,15 @@ function getRecipe() {
         .then ( res2 => {
             console.log('(1) Outside result:', res2);
             showOutput(res2.data.meals[0]);
+            return
         })
         .catch((err) => {
             console.error(err);
         });
     }
+    
+
+
 
 }
 
@@ -153,3 +169,7 @@ axios.interceptors.request.use(
 
 mealBtn.addEventListener("click", getRecipe);
 // addEventListener("click", toggleText);
+
+
+const region = document.getElementById('areaSelect');
+const category = document.getElementById('categorySelect');

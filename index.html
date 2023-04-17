@@ -21,8 +21,10 @@
                 id="min-container"
             >
                 <h2>Cooking made easy!</h2>
-                <pre><em>Click below button for a surprise</em></pre>
+                <p></p>
+                <pre><em>Click "Get Recipe" for a surprise</em></pre>
                 <div>
+                    <pre id="areaField"><em>Filter By Region</em></pre>
                     <select id="areaSelect">
                         <option value="">Any</option>
                         <script>
@@ -41,8 +43,56 @@
                                 o.value = item;
                                 areaSelect.appendChild(o);
                             });
+                            
+                            areaSelect.addEventListener('change', () => {
+
+                                if(region.value == ""){
+                                    document.getElementById("categorySelect").hidden = false;
+                                    document.getElementById("categoryField").hidden = false;
+                                    
+                                }
+                                if(region.value != ""){
+                                    document.getElementById("categorySelect").hidden = true;
+                                    document.getElementById("categoryField").hidden = true;
+                                }
+
+
+                             });
+
                         </script>
-                        </select>
+                    </select>
+                </div>
+                <div>
+                    <p></p>
+                    <pre id="categoryField"><em>Filter by Mealtype (Breakfast Only)</em></pre>
+                    <select id="categorySelect">
+                        <option value="">Any</option>
+                        <script>
+                            let cat = ["Breakfast"];
+        
+                            cat.forEach(function(item){
+                                let o=document.createElement("option");
+                                o.text = item;
+                                o.value = item;
+                                categorySelect.appendChild(o);
+                            });
+
+                            categorySelect.addEventListener('change', () => {
+
+                                if(category.value == ""){
+                                    document.getElementById("areaSelect").hidden = false;
+                                    document.getElementById("areaField").hidden = false;
+                                }
+                                if(category.value != ""){
+                                    document.getElementById("areaSelect").hidden = true;
+                                    document.getElementById("areaField").hidden = true;
+                                }
+
+
+                            });
+                        </script>
+                    </select>
+                    <p></p>
                 </div>
                 <button
                     class="btn btn-success mt-1 mb-5"
